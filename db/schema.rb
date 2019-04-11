@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_041340) do
+ActiveRecord::Schema.define(version: 2019_04_11_140823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "jobs", force: :cascade do |t|
     t.string "name", null: false
-    t.time "start_time", null: false
-    t.time "end_time", null: false
-    t.datetime "date", null: false
+    t.string "start_time", null: false
+    t.string "end_time", null: false
+    t.string "date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "truck_id"
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 2019_04_11_041340) do
 
   create_table "trucks", force: :cascade do |t|
     t.string "name", null: false
-    t.time "start_time", null: false
-    t.time "end_time", null: false
+    t.string "start_time", null: false
+    t.string "end_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_trucks_on_name"
