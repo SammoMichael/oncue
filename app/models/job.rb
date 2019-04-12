@@ -20,10 +20,15 @@ class Job < ActiveRecord::Base
     # validate is_available?
 
     belongs_to :truck, class_name: "Truck", foreign_key: "truck_id"
-
-    # def is_available?
-        
-    # end 
+    def is_available?
+        trucks = Truck.all
+        for truck in trucks
+            if truck.start_time.to_i >= self.start_time.to_i && truck.end_time.to_i <= self.end_time.to_i
+                return false 
+            end 
+            # debugger
+        end  
+    end 
     private
         
 end
