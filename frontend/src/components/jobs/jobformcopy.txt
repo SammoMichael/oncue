@@ -5,11 +5,11 @@ class JobForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: 'sam',
+      name: '',
       start_time: '7am',
       end_time: '8pm',
-      date: '02/02/2022',
-      truck_id: ''
+      date: "dd/mm/yyyy",
+      truck_id: null
   };
     this.update = this.update.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -38,36 +38,36 @@ class JobForm extends Component {
     }
 
   availability() {
+    debugger
     var availableTrucks = []
     const length = Object.values(this.props).length
     for (let i = 0; i < length; i++) {
-      // debugger
       var truck = this.props[i];
-      console.log(truck)
-
       const jobs = truck.props.jobs
       console.log(jobs)
       var checkable_jobs = jobs.filter(job => job.date === this.state.date)
-      if (!this.check_available(checkable_jobs || !checkable_jobs)) { availableTrucks.push(truck.props.id)}
-      console.log(availableTrucks)
+      if (!this.check_available(checkable_jobs)) { availableTrucks.push(truck.props.id)}
     }
+    console.log(availableTrucks)
+    this.setState({truck_id: availableTrucks[0]})
+    console.log(this.state.truck_id)
     return availableTrucks[0]
-    
-  } 
-
+  }
+  
   handleSubmit(event) {
     event.preventDefault()
-    var body = this.state
-    body.truck_id = this.availability()
-
-    // this.state.truck_id = this.availability();
-    // this.setState({truck_id: this.availability()})
-    if (typeof body.truck_id === "undefined" || body.truck_id === '') {
+    if (this.state.date === "dd/mm/yyyy" || this.state.name === '') {
+    alert('You must fill out form') 
+    return
+    }
+    const truck_id = this.availability()
+    this.setState({ truck_id: truck_id })
+    debugger
+    if (this.state.truck_id === null) {
+      debugger
       return alert('No Availability choose another time')
     } 
-    
-    console.log(this.state)
-    
+    debugger
     var settings = {
       method: 'POST',
       body: JSON.stringify(this.state),
@@ -79,8 +79,8 @@ class JobForm extends Component {
     this.callBackendAPI(settings)
       .then(res => this.setState({ data: res }))
       .catch(err => console.log(err));
-      window.location.reload()
   }
+  
   callBackendAPI = async (settings) => {
     const response = await fetch('http://localhost:3000/api/jobs', settings)
     const body = await response.json();

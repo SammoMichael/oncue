@@ -2,9 +2,6 @@ class Api::JobsController < ApplicationController
     
     def create
         @job = Job.new(jobs_params)
-        # @job.truck_id = 1
-        # debugger
-        # @Job.save render :index : flash[:error] = @job.errors.full_messages
         @job.save
         render :index
     end 
@@ -17,6 +14,6 @@ class Api::JobsController < ApplicationController
     private
 
     def jobs_params
-        params.require(:job).permit(:name, :start_time, :end_time, :date)
+        params.require(:job).permit(:name, :start_time, :end_time, :date, :truck_id)
     end
 end
