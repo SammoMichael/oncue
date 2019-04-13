@@ -5,10 +5,10 @@ class JobForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: 'sam',
+      name: '',
       start_time: '7am',
       end_time: '8pm',
-      date: '02/02/2022',
+      date: 'dd/mm/yyyy',
       truck_id: ''
   };
     this.update = this.update.bind(this)
